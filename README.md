@@ -10,6 +10,8 @@
 
 This project simulates a common retail sales scenario where SQL is used to perform end-to-end data analysis. You'll begin with raw data, clean it, and use SQL queries to derive insights for business decision-making.
 
+Created by **Sakib Sadri (sakibsadri)**
+
 ---
 
 ## 🧩 Features & Objectives
@@ -37,11 +39,17 @@ Retail-Sales-Analysis-SQL/
 
 ## 🧱 Database Schema
 
-**Database**: `p1_retail_db`
-**Table**: `retail_sales`
+**Database**: `Sadri_projects`
+**Table**: `Retail_Sales`
 
 ```sql
-CREATE TABLE retail_sales (
+CREATE DATABASE Sadri_projects;
+GO
+
+USE Sadri_projects;
+GO
+
+CREATE TABLE Retail_Sales (
   transactions_id INT PRIMARY KEY,
   sale_date DATE,
   sale_time TIME,
@@ -62,16 +70,16 @@ CREATE TABLE retail_sales (
 
 ```sql
 -- Total Records
-SELECT COUNT(*) FROM retail_sales;
+SELECT COUNT(*) FROM Retail_Sales;
 
 -- Unique Customers
-SELECT COUNT(DISTINCT customer_id) FROM retail_sales;
+SELECT COUNT(DISTINCT customer_id) FROM Retail_Sales;
 
 -- Category Types
-SELECT DISTINCT category FROM retail_sales;
+SELECT DISTINCT category FROM Retail_Sales;
 
 -- Delete rows with missing/nulls
-DELETE FROM retail_sales
+DELETE FROM Retail_Sales
 WHERE sale_date IS NULL OR sale_time IS NULL OR customer_id IS NULL OR
       gender IS NULL OR age IS NULL OR category IS NULL OR
       quantity IS NULL OR price_per_unit IS NULL OR cogs IS NULL OR total_sale IS NULL;
@@ -81,46 +89,49 @@ WHERE sale_date IS NULL OR sale_time IS NULL OR customer_id IS NULL OR
 
 ## 🧠 Business Questions Answered
 
-### 1️⃣ Sales on Specific Day
+### 1️⃣ Write a SQL query to retrieve all columns for sales made on '2022-11-05:
 
 ```sql
-SELECT * FROM retail_sales WHERE sale_date = '2022-11-05';
+SELECT * FROM Retail_Sales WHERE sale_date = '2022-11-05';
 ```
 
-### 2️⃣ Clothing Sales with High Quantity
+### 2️⃣ Write a SQL query to retrieve all transactions where the category is 'Clothing' and the quantity sold is more than 4 in the month of Nov-2022:
 
 ```sql
-SELECT * FROM retail_sales
-WHERE category = 'Clothing' AND MONTH(sale_date) = 11 AND YEAR(sale_date) = 2022 AND quantity > 4;
+SELECT * FROM Retail_Sales
+WHERE category = 'Clothing'
+  AND MONTH(sale_date) = 11
+  AND YEAR(sale_date) = 2022
+  AND quantity > 4;
 ```
 
-### 3️⃣ Total Sales by Category
+### 3️⃣ Write a SQL query to calculate the total sales (total\_sale) for each category:
 
 ```sql
-SELECT category, SUM(total_sale) AS total_sales FROM retail_sales GROUP BY category;
+SELECT category, SUM(total_sale) AS total_sales FROM Retail_Sales GROUP BY category;
 ```
 
-### 4️⃣ Average Age for Beauty Purchases
+### 4️⃣ Write a SQL query to find the average age of customers who purchased items from the 'Beauty' category:
 
 ```sql
-SELECT AVG(age) FROM retail_sales WHERE category = 'Beauty';
+SELECT AVG(age) FROM Retail_Sales WHERE category = 'Beauty';
 ```
 
-### 5️⃣ Transactions Over ₹1000
+### 5️⃣ Write a SQL query to find all transactions where the total\_sale is greater than 1000:
 
 ```sql
-SELECT * FROM retail_sales WHERE total_sale > 1000;
+SELECT * FROM Retail_Sales WHERE total_sale > 1000;
 ```
 
-### 6️⃣ Transactions by Gender and Category
+### 6️⃣ Write a SQL query to find the total number of transactions (transaction\_id) made by each gender in each category:
 
 ```sql
 SELECT gender, category, COUNT(transactions_id) AS total_transactions
-FROM retail_sales
+FROM Retail_Sales
 GROUP BY gender, category;
 ```
 
-### 7️⃣ Best-Selling Month Per Year
+### 7️⃣ Write a SQL query to calculate the average sale for each month. Find out best selling month in each year:
 
 ```sql
 SELECT year, month, avg_sale FROM (
@@ -129,28 +140,28 @@ SELECT year, month, avg_sale FROM (
     MONTH(sale_date) AS month,
     AVG(total_sale) AS avg_sale,
     RANK() OVER(PARTITION BY YEAR(sale_date) ORDER BY AVG(total_sale) DESC) AS rank
-  FROM retail_sales
+  FROM Retail_Sales
   GROUP BY YEAR(sale_date), MONTH(sale_date)
 ) AS ranked_months
 WHERE rank = 1;
 ```
 
-### 8️⃣ Top 5 Customers by Total Sales
+### 8️⃣ Write a SQL query to find the top 5 customers based on the highest total sales:
 
 ```sql
 SELECT TOP 5 customer_id, SUM(total_sale) AS total_sales
-FROM retail_sales
+FROM Retail_Sales
 GROUP BY customer_id
 ORDER BY total_sales DESC;
 ```
 
-### 9️⃣ Unique Customers per Category
+### 9️⃣ Write a SQL query to find the number of unique customers who purchased items from each category:
 
 ```sql
-SELECT category, COUNT(DISTINCT customer_id) AS unique_customers FROM retail_sales GROUP BY category;
+SELECT category, COUNT(DISTINCT customer_id) AS unique_customers FROM Retail_Sales GROUP BY category;
 ```
 
-### 🔟 Sales by Time of Day (Shifts)
+### 🔟 Write a SQL query to create each shift and number of orders (Example Morning <12, Afternoon Between 12 & 17, Evening >17):
 
 ```sql
 SELECT
@@ -160,7 +171,7 @@ SELECT
     ELSE 'Evening'
   END AS shift,
   COUNT(*) AS number_of_orders
-FROM retail_sales
+FROM Retail_Sales
 GROUP BY
   CASE
     WHEN DATEPART(HOUR, sale_time) < 12 THEN 'Morning'
@@ -185,7 +196,7 @@ GROUP BY
 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/Retail-Sales-Analysis-SQL.git
+git clone https://github.com/sakibsadri/retail-sales-analysis-sql.git
 ```
 
 2. Open `SQL Server Management Studio`
@@ -208,7 +219,7 @@ git clone https://github.com/your-username/Retail-Sales-Analysis-SQL.git
 
 ## 📜 License
 
-MIT License © \[Your Name]
+MIT License © Sakib Sadri
 
 ---
 
@@ -220,4 +231,4 @@ Contributions are welcome! Feel free to fork the repo and submit a pull request.
 
 ## 📬 Contact
 
-Connect with me on [LinkedIn](https://linkedin.com/in/your-profile) or email me at `your.email@example.com`
+Connect with me on [LinkedIn](https://linkedin.com/in/sakibsadri) or email me at `sakibsadri@gmail.com`
