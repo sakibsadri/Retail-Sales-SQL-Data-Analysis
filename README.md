@@ -1,46 +1,46 @@
 # 🧾 Retail Sales Analysis Using SQL Server
 
-![SQL Server](https://img.shields.io/badge/SQL-Server-red?style=for-the-badge\&logo=MicrosoftSQLServer)
+A **beginner-friendly SQL project** to explore, clean, and analyze retail data using **SQL Server**. Ideal for aspiring **Data Analysts** looking to strengthen their SQL skills through real-world business scenarios.
 
-> A beginner-friendly project to explore, clean, and analyze retail data using SQL Server. Perfect for aspiring Data Analysts who want to strengthen their SQL skills by solving real-world business problems.
+Created by **Sakib Sadri** (sakibsadri)
 
 ---
 
 ## 📘 Project Description
 
-This project simulates a common retail sales scenario where SQL is used to perform end-to-end data analysis. You'll begin with raw data, clean it, and use SQL queries to derive insights for business decision-making.
-
-Created by **Sakib Sadri (sakibsadri)**
+This project simulates a retail sales scenario where SQL is used to perform **end-to-end data analysis**. Start from **raw data**, clean it, and extract valuable **business insights** using SQL queries.
 
 ---
 
 ## 🧩 Features & Objectives
 
-* 📦 **Database Setup** – Design a structured schema in SQL Server
-* 🧹 **Data Cleaning** – Identify and remove null or missing values
-* 🔍 **Exploratory Data Analysis (EDA)** – Understand distributions and counts
-* 💡 **Business Intelligence Queries** – Answer 10 key business questions
+- 📦 **Database Setup** – Design a structured schema in SQL Server  
+- 🧹 **Data Cleaning** – Identify and remove null or missing values  
+- 🔍 **Exploratory Data Analysis (EDA)** – Understand distributions and patterns  
+- 💡 **Business Intelligence Queries** – Answer 10+ real-world business questions  
 
 ---
 
 ## 🗂️ Project Structure
 
-```bash
 Retail-Sales-Analysis-SQL/
 │
-├── database_setup.sql              # Create database and table
-├── data_exploration_cleaning.sql   # Data checks and cleaning queries
-├── analysis_queries.sql            # EDA and business logic queries
-├── retail_data.csv                 # Sample dataset (optional)
-└── README.md                       # Project documentation
-```
+├── database_setup.sql # Create database and table
+├── data_exploration_cleaning.sql # Data checks and cleaning queries
+├── analysis_queries.sql # EDA and business logic queries
+├── retail_data.csv # Sample dataset (optional)
+└── README.md # Project documentation
+
+pgsql
+Copy
+Edit
 
 ---
 
 ## 🧱 Database Schema
 
-**Database**: `Sadri_projects`
-**Table**: `Retail_Sales`
+**Database:** `Sadri_projects`  
+**Table:** `Retail_Sales`
 
 ```sql
 CREATE DATABASE Sadri_projects;
@@ -62,13 +62,10 @@ CREATE TABLE Retail_Sales (
   cogs FLOAT,
   total_sale FLOAT
 );
-```
-
----
-
-## 🧽 Data Cleaning Steps
-
-```sql
+🧽 Data Cleaning Steps
+sql
+Copy
+Edit
 -- Total Records
 SELECT COUNT(*) FROM Retail_Sales;
 
@@ -78,62 +75,56 @@ SELECT COUNT(DISTINCT customer_id) FROM Retail_Sales;
 -- Category Types
 SELECT DISTINCT category FROM Retail_Sales;
 
--- Delete rows with missing/nulls
+-- Remove rows with null values
 DELETE FROM Retail_Sales
 WHERE sale_date IS NULL OR sale_time IS NULL OR customer_id IS NULL OR
       gender IS NULL OR age IS NULL OR category IS NULL OR
       quantity IS NULL OR price_per_unit IS NULL OR cogs IS NULL OR total_sale IS NULL;
-```
+🧠 Business Questions Answered
+1️⃣ Sales made on 2022-11-05
 
----
-
-## 🧠 Business Questions Answered
-
-### 1️⃣ Write a SQL query to retrieve all columns for sales made on '2022-11-05:
-
-```sql
+sql
+Copy
+Edit
 SELECT * FROM Retail_Sales WHERE sale_date = '2022-11-05';
-```
+2️⃣ 'Clothing' category sales with quantity > 4 in Nov 2022
 
-### 2️⃣ Write a SQL query to retrieve all transactions where the category is 'Clothing' and the quantity sold is more than 4 in the month of Nov-2022:
-
-```sql
+sql
+Copy
+Edit
 SELECT * FROM Retail_Sales
-WHERE category = 'Clothing'
-  AND MONTH(sale_date) = 11
-  AND YEAR(sale_date) = 2022
-  AND quantity > 4;
-```
+WHERE category = 'Clothing' AND MONTH(sale_date) = 11 AND YEAR(sale_date) = 2022 AND quantity > 4;
+3️⃣ Total sales by category
 
-### 3️⃣ Write a SQL query to calculate the total sales (total\_sale) for each category:
-
-```sql
+sql
+Copy
+Edit
 SELECT category, SUM(total_sale) AS total_sales FROM Retail_Sales GROUP BY category;
-```
+4️⃣ Average age of customers who purchased 'Beauty' items
 
-### 4️⃣ Write a SQL query to find the average age of customers who purchased items from the 'Beauty' category:
-
-```sql
+sql
+Copy
+Edit
 SELECT AVG(age) FROM Retail_Sales WHERE category = 'Beauty';
-```
+5️⃣ Transactions with total_sale > 1000
 
-### 5️⃣ Write a SQL query to find all transactions where the total\_sale is greater than 1000:
-
-```sql
+sql
+Copy
+Edit
 SELECT * FROM Retail_Sales WHERE total_sale > 1000;
-```
+6️⃣ Number of transactions by gender and category
 
-### 6️⃣ Write a SQL query to find the total number of transactions (transaction\_id) made by each gender in each category:
-
-```sql
+sql
+Copy
+Edit
 SELECT gender, category, COUNT(transactions_id) AS total_transactions
 FROM Retail_Sales
 GROUP BY gender, category;
-```
+7️⃣ Best selling month of each year based on average sales
 
-### 7️⃣ Write a SQL query to calculate the average sale for each month. Find out best selling month in each year:
-
-```sql
+sql
+Copy
+Edit
 SELECT year, month, avg_sale FROM (
   SELECT
     YEAR(sale_date) AS year,
@@ -144,26 +135,28 @@ SELECT year, month, avg_sale FROM (
   GROUP BY YEAR(sale_date), MONTH(sale_date)
 ) AS ranked_months
 WHERE rank = 1;
-```
+8️⃣ Top 5 customers by total sales
 
-### 8️⃣ Write a SQL query to find the top 5 customers based on the highest total sales:
-
-```sql
+sql
+Copy
+Edit
 SELECT TOP 5 customer_id, SUM(total_sale) AS total_sales
 FROM Retail_Sales
 GROUP BY customer_id
 ORDER BY total_sales DESC;
-```
+9️⃣ Unique customers by category
 
-### 9️⃣ Write a SQL query to find the number of unique customers who purchased items from each category:
+sql
+Copy
+Edit
+SELECT category, COUNT(DISTINCT customer_id) AS unique_customers
+FROM Retail_Sales
+GROUP BY category;
+🔟 Order count by time of day (shift)
 
-```sql
-SELECT category, COUNT(DISTINCT customer_id) AS unique_customers FROM Retail_Sales GROUP BY category;
-```
-
-### 🔟 Write a SQL query to create each shift and number of orders (Example Morning <12, Afternoon Between 12 & 17, Evening >17):
-
-```sql
+sql
+Copy
+Edit
 SELECT
   CASE
     WHEN DATEPART(HOUR, sale_time) < 12 THEN 'Morning'
@@ -178,57 +171,53 @@ GROUP BY
     WHEN DATEPART(HOUR, sale_time) BETWEEN 12 AND 17 THEN 'Afternoon'
     ELSE 'Evening'
   END;
-```
+📊 Insights Summary
+📈 November is the peak month for sales across years
 
----
+👗 Clothing is the top-performing category
 
-## 📊 Insights Summary
+🧓 Customers in the Beauty category have higher average age
 
-* 📈 November is the peak month for sales across years
-* 👗 Clothing is the top-performing category
-* 🧓 Beauty buyers have higher average age
-* 💸 Many high-value purchases over ₹1000
+💸 Numerous transactions over ₹1000 value
 
----
+🚀 How to Run This Project
+Clone the repository
 
-## 🚀 How to Run This Project
-
-1. Clone the repository
-
-```bash
+bash
+Copy
+Edit
 git clone https://github.com/sakibsadri/retail-sales-analysis-sql.git
-```
+Open SQL Server Management Studio
 
-2. Open `SQL Server Management Studio`
-3. Run each SQL file in order:
+Execute the following scripts in order:
 
-   * `database_setup.sql`
-   * `data_exploration_cleaning.sql`
-   * `analysis_queries.sql`
+database_setup.sql
 
----
+data_exploration_cleaning.sql
 
-## 🛠️ Tools & Technologies
+analysis_queries.sql
 
-* SQL Server
-* SQL Window Functions
-* Aggregations and Case Logic
-* Joins, Group By, Ranking
+🛠️ Tools & Technologies
+Microsoft SQL Server
 
----
+SQL Queries (Joins, Aggregations, Group By, Ranking)
 
-## 📜 License
+CASE Statements and Window Functions
 
-MIT License © Sakib Sadri
+📜 License
+Licensed under the MIT License
+© Sakib Sadri
 
----
+🙌 Contributing
+Have suggestions or want to contribute?
+Fork the repo, create a branch, and submit a pull request — Contributions are welcome!
 
-## 🙌 Contributing
+📬 Contact
+📧 sakibsadri@gmail.com
+🔗 Connect on LinkedIn
 
-Contributions are welcome! Feel free to fork the repo and submit a pull request.
+vbnet
+Copy
+Edit
 
----
-
-## 📬 Contact
-
-Connect with me on [LinkedIn](https://linkedin.com/in/sakibsadri) or email me at `sakibsadri@gmail.com`
+Let me know if you'd like this in an actual file or want it formatted for GitHub Pages or Notion too.
